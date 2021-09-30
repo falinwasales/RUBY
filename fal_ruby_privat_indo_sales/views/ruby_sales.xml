@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="ruby_sales_ext_view" model="ir.ui.view">
+        <field name="name">ruby_sales_ext_view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="delivery_period"/>
+                <field name="doc_credit_num"/>
+                <field name="doc_credit_date"/>
+                <field name="incoterms"/>
+                <field name="payment" domain="[('payment_type', '=', 'customer')]"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='require_signature']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='require_payment']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sale_info']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sale_reporting']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sale_shipping']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sales_person']" position="after">
+                <group name="production_ruby" string="Production">
+                    <field name="warehouse_id"/>
+                    <field name="lot_num"/>
+                    <field name="production_date"/>
+                    <field name="exp_date"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="after">
+                <page name="delivery_details" string="Delivery Details">
+                    <group>
+                        <group name="packaging_info" string="Packaging Info">
+                            <field name="packaging_size"/>
+                            <field name="packaging_type"/>
+                            <field name="marking"/>
+                            <field name="marking_type"/>
+                            <field name="upload_marking_type" filename="upload_name"/>
+                            <field name="upload_name" invisible="1"/>
+                        </group>
+                        <group name="container_info" string="Container Info">
+                            <field name="partial_shipment"/>
+                            <field name="num_of_container"/>
+                            <field name="type_of_container"/>
+                            <field name="load_port" domain="[('port_type', '=', 'load')]"/>
+                            <field name="dest_port" domain="[('port_type', '=', 'destination')]"/>
+                            <field name="dest_country"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="shipping_info" string="Shipping Info">
+                            <field name="advice_draft_date"/>
+                            <field name="ori_doc_submit_date"/>
+                            <field name="track_no_date"/>
+                            <field name="dhs_web" invisible="1"/>
+                            <field name="track_no"/>
+                            <field name="track_link" widget="url"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ruby_sales_edit_view" model="ir.ui.view">
+        <field name="name">ruby_sales_edit_view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='optional_products']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+
+    <record model="ir.ui.menu" id="sale.report_sales_team">
+        <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+    </record>
+</odoo>

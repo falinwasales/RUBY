@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="fal_ruby_privat_indo_vendor_view_form" model="ir.ui.view">
+        <field name="name">fal.ruby.privat.indo.vendor.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website']" position="before">
+                <field name="secondary_email" string="Secondary Email"/>
+            </xpath>
+            <xpath expr="//field[@name='l10n_id_pkp']" position="after">
+                <field name="dest_port" domain="[('port_type', '=', 'destination')]"/>
+                <field name="dest_country"/>
+                <field name="contact_person"/>
+                <field name="ruby_payment"/>
+                <field name="customer_rank" invisible="1"/>
+                <field name="supplier_rank" invisible="1"/>
+            </xpath>
+        </field>    
+    </record>
+
+    <record id="fal_ruby_privat_indo_bank_account_view_tree" model="ir.ui.view">
+        <field name="name">fal.ruby.privat.indo.bank.account.view.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='banks']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='accounting_entries']" position="after">
+                <field name="bank_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="bank_id"/>
+                        <field name="acc_number"/>
+                        <field name="acc_holder_name" string="Bank Account Name" invisible="0"/>
+                        <field name="bank_address" string="Bank Address"/>
+                    </tree>
+                </field>
+                <group>
+                    <button type="action" class="btn-link" name="61" context="{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'form_view_ref': 'account.view_company_partner_bank_form'}" string="View accounts detail" colspan="2"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

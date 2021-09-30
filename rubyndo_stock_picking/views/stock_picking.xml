@@ -1,0 +1,127 @@
+<odoo>
+    <data>
+        <record id="rubyndo_stock_picking_ruby" model="ir.ui.view">
+            <field name="name">stock.picking.form.ruby</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name='load_port'/>
+                    <field name='dest_port'/>
+                    <field name='shipping_line'/>
+                    <field name='forwarder'/>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name='vessel'/>
+                    <field name='connecting_vessel'/>
+                </xpath>
+
+                <xpath expr="//field[@name='date_done']" position="before">
+                    <field name='date_of_shipment'/>
+                    <field name='date_of_arrive'/>
+                </xpath>
+
+                <xpath expr="//field[@name='move_line_ids_without_package']" position='after'>
+                    <group name="note_group" col="6" class="mt-2 mt-md-0">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <field name='total_bags'/>
+                            <field name='total_nett_weights'/>
+                            <field name='total_gross_weights'/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='operations']" position="attributes">
+                    <attribute name='invisible'>1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_picking_rubyndo_data_tree" model="ir.ui.view">
+            <field name="name">stock.picking.rubyndo.data.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='product_id']" position="before">
+                    <field name='container_truck_number' readonly='False'/>
+                    <field name='seal_number' readonly='False'/>
+                </xpath>
+
+                <xpath expr="//tree/field[@name='product_id']" position="after">
+                    <field name='bags_number' readonly='False'/>
+                    <field name='nett_weight' readonly='False'/>
+                    <field name='gross_weight' readonly='False'/>
+                </xpath>
+
+                <xpath expr="//tree/field[@name='qty_done']" position="attributes">
+                    <attribute name='readonly'>1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_order_line_tree_ext" model="ir.ui.view">
+            <field name="name">view_order_line_tree_ext</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty_delivered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='qty_invoiced']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='qty_to_invoice']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_uom_qty']" position="after">
+                    <field name='price_unit'/>
+                    <field name='dest_port_line'/>
+                    <field name='dest_country_line'/>
+                    <field name='etd'/>
+                    <field name='eta'/>
+                    <field name='track_number'/>
+                </xpath>
+                <xpath expr="//field[@name='price_subtotal']" position="attributes">
+                    <attribute name="string">Total Price</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_line_view_form_readonly_ext" model="ir.ui.view">
+            <field name="name">sale_order_line_view_form_readonly_ext</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_unit']" position="after">
+                    <field name='dest_port_line'/>
+                    <field name='dest_country_line'/>
+                    <field name='etd'/>
+                    <field name='eta'/>
+                    <field name='track_number'/>
+                    <field name='track_dhl_number' widget="url"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_ruby_sale_order_line" model="ir.actions.act_window">
+            <field name="name">Sale Order Line</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="help" type="html">
+                <p>
+                    Empty Sales Order Line
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_ruby_sales_order_line"
+            name="Sales Order Line"
+            parent="sale.sale_order_menu"
+            action="action_ruby_sale_order_line"
+            sequence="3"/>
+    </data>
+</odoo>

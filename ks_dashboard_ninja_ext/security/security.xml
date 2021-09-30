@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="ir_rule_ks_dashboard_item_company_restrictions" model="ir.rule">
+            <field name="name">Dashboard Item Operating Unit Restriction: User Can only view their operating unit items.</field>
+            <field name="model_id" ref="ks_dashboard_ninja.model_ks_dashboard_ninja_item"/>
+            <field name="domain_force">['|',('ks_operating_unit_ids','in', user.operating_unit_ids.ids),('ks_operating_unit_ids','=',False)]</field>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+
+        <record id="partner_operating_units" model="ir.rule">
+            <field name="name">operating unit partner</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="domain_force">['|', ('operating_unit_id','in', user.operating_unit_ids.ids), ('operating_unit_id', '=', False)]</field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval = "[('module','=','base'),('name','=','res_partner_rule')]"/>
+            </function>
+            <value eval ="{'noupdate': False}"/>
+        </function>
+
+        <record model="ir.rule" id="base.res_partner_rule">
+            <field name="active" eval="False"/>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval = "[('module','=','operating_unit'),('name','=','ir_rule_operating_unit_allowed_operating_units')]"/>
+            </function>
+            <value eval ="{'noupdate': False}"/>
+        </function>
+
+        <record model="ir.rule" id="operating_unit.ir_rule_operating_unit_allowed_operating_units">
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

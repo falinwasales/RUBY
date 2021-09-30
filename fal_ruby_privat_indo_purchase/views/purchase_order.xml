@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="fal_ruby_privat_indo_po_view" model="ir.ui.view">
+		<field name="name">fal_ruby_privat_indo_po_view</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_ref']" position="after">
+				<field name="authorized_contact"/>
+			</xpath>
+			<xpath expr="//tree/field[@name='name']" position="before">
+				<field name="effective_date_line" string="Effective Date"/>
+			</xpath>
+			<xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+				<page name="purchase_details" string="Purchase Details">
+					<group>
+						<group name="purchase_details_group" string="Purchase Details">
+							<field name="freight"/>
+							<field name="payment" domain="[('payment_type', '=', 'vendor')]"/>
+							<field name="warranty"/>
+							<field name="conditions"/>
+							<field name="delivery_period"/>
+							<field name="delivery_address"/>
+							<field name="sw_code"/>
+						</group>
+						<group name="bank_details_group" string="Bank Details">
+							<field name="bank_name"/>
+							<field name="bank_acc_name"/>
+							<field name="bank_acc_num"/>
+							<field name="bank_address"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+			<xpath expr="//field[@name='amount_tax']" position="before">
+				<field name="freight"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="purchase_order_form_ext" model="ir.ui.view">
+		<field name="name">purchase_order_form_ext</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_operating_unit.purchase_order_form" />
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='requesting_operating_unit_id']" position="attributes">
+        		<attribute name="invisible">1</attribute>
+        	</xpath>
+        </field>
+	</record>
+
+	<record id="action_ruby_purchase_order_line" model="ir.actions.act_window">
+		<field name="name">Purchase Order Line</field>
+		<field name="res_model">purchase.order.line</field>
+		<field name="view_mode">tree,form,pivot</field>
+		<field name="help" type="html">
+			<p>
+				Empty Purchase Order Line
+			</p>
+		</field>
+	</record>
+
+	<menuitem 
+		id="menu_ruby_purchase_order_line" 
+		name="PO Line" 
+		parent="purchase.menu_procurement_management" 
+		action="action_ruby_purchase_order_line"
+		sequence="7"/>
+</odoo>

@@ -1,0 +1,29 @@
+<odoo>
+	<record id="rubyndo_product_template_form" model="ir.ui.view">
+        <field name="name">product.template.product.form.ruby</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+            	<field name='product_description'/>
+            	<field name='specification'/>
+            	<field name='hs_code'/>
+            	<field name='botanical_name'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="rubyndo_product_product_form" model="ir.ui.view">
+        <field name="name">product.product.form.ruby</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+            	<field name='product_description' readonly='1'/>
+            	<field name='specification' readonly='1'/>
+            	<field name='hs_code' readonly='1'/>
+            	<field name='botanical_name' readonly='1'/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

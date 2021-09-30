@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="ruby_payment_tree_view" model="ir.ui.view">
+		<field name="name">ruby_payment_tree_view</field>
+        <field name="model">ruby.payment.format</field>
+        <field name="arch" type="xml">
+        	<tree>
+        		<field name="payment_format"/>
+        		<field name="payment_type"/>
+        	</tree>
+        </field>
+	</record>
+
+	<record id="ruby_payment_form_view" model="ir.ui.view">
+		<field name="name">ruby_payment_form_view</field>
+        <field name="model">ruby.payment.format</field>
+        <field name="arch" type="xml">
+        	<form>
+        		<group>
+        			<group>
+	    				<field name="payment_format"/>
+	    				<field name="payment_type"/>
+        			</group>
+        		</group>
+        	</form>
+        </field>
+	</record>
+
+	<record id="action_ruby_payment" model="ir.actions.act_window">
+		<field name="name">Payment Format</field>
+        <field name="res_model">ruby.payment.format</field>
+        <field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem
+		id="menu_ruby_payment_format"
+		name="Payment Format"
+		parent="sale.menu_sale_config"
+		action="action_ruby_payment"
+		sequence="1"/>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="ruby_port_tree_view" model="ir.ui.view">
+		<field name="name">ruby_port_tree_view</field>
+        <field name="model">ruby.port</field>
+        <field name="arch" type="xml">
+        	<tree>
+        		<field name="port_name"/>
+        		<field name="port_country"/>
+        		<field name="port_type"/>
+        	</tree>
+        </field>
+	</record>
+
+	<record id="ruby_port_form_view" model="ir.ui.view">
+		<field name="name">ruby_port_form_view</field>
+        <field name="model">ruby.port</field>
+        <field name="arch" type="xml">
+        	<form>
+        		<group>
+        			<group>
+	    				<field name="port_name"/>
+	    				<field name="port_country"/>
+	    				<field name="port_type"/>
+        			</group>
+        		</group>
+        	</form>
+        </field>
+	</record>
+
+	<record id="action_ruby_port" model="ir.actions.act_window">
+		<field name="name">Port</field>
+        <field name="res_model">ruby.port</field>
+        <field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem
+		id="menu_ruby_port"
+		name="Port"
+		parent="sale.menu_sale_config"
+		action="action_ruby_port"
+		sequence="2"/>
+</odoo>
